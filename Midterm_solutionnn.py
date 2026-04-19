@@ -25,19 +25,13 @@ for item in range(len(categories)):
     print(str(item + 1) + ". " + str(categories[item][0]) + str(categories[item][1]))
 print("="*30)
 
-expense=[]
+expense_list=[]
 total_expense=0
-remaining= float(Weekly_budget) - float(total_expense)
 
 for item in range(4):
     print("\n-- EXPENSE" + str(item + 1))
     category_choice=input("Enter your Category (1-5) and 0 to skipped: ")
     while category_choice == "" or not category_choice.isdigit():
-        print("Invalid")
-        category_choice=input("Enter your Category (1-5) and 0 to skipped: ")
-   
-    category_choice=float(category_choice)
-    while category_choice < 0 or category_choice >= 5:
         print("Invalid")
         category_choice=input("Enter your Category (1-5) and 0 to skipped: ")
    
@@ -54,12 +48,35 @@ for item in range(4):
         amount=float(amount)
         total=(amount/Weekly_budget)*100
         category_choice=int(category_choice)
-        expense.append([categories[category_choice -1][0], description,amount])
         if total > 25:
             print("High Expense Alert!")
             total_expense+=amount
+            label="High Expense Alert!"
+           
         else:
             total_expense+=amount
+            label=""
+           
+        expense_list.append([categories[category_choice -1][0], description,amount,label])
        
     else:
         print("Invalid")
+   
+remaining_money= float(Weekly_budget) - float(total_expense)
+
+print()
+print("=" * 30)
+print(Student_name + " -- WEEKLY EXPENSES LOG")
+print("=" * 30)
+print("Weekly Budget: " + "P" + str(Weekly_budget))
+for item in range(len(expense_list)):
+    print(str(item+1) + ". " + str(expense_list[item][0]))
+    print(str(expense_list[item][1]) + " " + str(expense_list[item][2]) + " " +str(expense_list[item][3]))
+print("="* 30)
+print("Total spend: " + "P" + str(total_expense))
+print("Remaining: " + "P" + str(remaining_money))
+
+if remaining_money >= 0:
+    print("Status: Budget OK! Keep it up.")
+else:
+    print("Status: Overspent! Reduce spending.")
